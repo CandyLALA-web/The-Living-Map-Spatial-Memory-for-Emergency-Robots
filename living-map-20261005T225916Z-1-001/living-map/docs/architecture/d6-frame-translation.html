@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D6: Geodetic Frame Translation Architecture (Local -> ENU -> WGS-84)</title>
+<style>
+ * { box-sizing: border-box; }
+ body {
+ margin: 0;
+ padding: 30px 20px;
+ background: #f8fafc;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+ color: #0f172a;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ }
+ .card {
+ background: #ffffff;
+ border: 1px solid #e2e8f0;
+ border-radius: 12px;
+ box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+ padding: 24px;
+ max-width: 1200px;
+ width: 100%;
+ margin-bottom: 20px;
+ }
+ .header {
+ border-bottom: 2px solid #e2e8f0;
+ padding-bottom: 12px;
+ margin-bottom: 20px;
+ text-align: center;
+ }
+ h1 {
+ font-size: 20px;
+ font-weight: 700;
+ color: #1e293b;
+ margin: 0 0 6px 0;
+ }
+ .badge {
+ display: inline-block;
+ background: #e0f2fe;
+ color: #0369a1;
+ font-size: 12px;
+ font-weight: 600;
+ padding: 3px 10px;
+ border-radius: 9999px;
+ }
+ .diagram-container {
+ width: 100%;
+ overflow: auto;
+ display: flex;
+ justify-content: center;
+ background: #ffffff;
+ padding: 10px;
+ }
+ .diagram-container svg {
+ max-width: 100%;
+ height: auto !important;
+ display: block;
+ }
+</style>
+</head>
+<body>
+
+<div class="card">
+ <div class="header">
+ <span class="badge">IEEE RAS &times; IEEE AESS TSYP14 &bull; Phase 1</span>
+ <h1>D6: Geodetic Frame Translation Architecture (Local -> ENU -> WGS-84)</h1>
+ </div>
+ <div class="diagram-container">
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 520" width="100%" height="100%" style="background:#fff; font-family:system-ui,-apple-system,sans-serif;">
+ <text x="530" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#0f172a">D6 — Geodetic Frame Translation Architecture</text>
+ <text x="530" y="58" text-anchor="middle" font-size="12" fill="#64748b">Mapping Private Robot Coordinates to Global WGS-84 Coordinates with Uncertainty</text>
+
+ <!-- Frame 1: Robot Local Frame -->
+ <rect x="40" y="100" width="280" height="240" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+ <text x="180" y="130" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">1. Robot Local Frame ($\mathcal{F}_{local}$)</text>
+ <text x="60" y="165" font-size="11" fill="#334155">• Cartesian coordinates $(x, y, z)$ in metres</text>
+ <text x="60" y="190" font-size="11" fill="#334155">• Origin $O$ at ONA portal entrance</text>
+ <text x="60" y="215" font-size="11" fill="#334155">• $+X$ along primary tunnel bore</text>
+ <text x="60" y="240" font-size="11" fill="#334155">• $+Y$ toward left tunnel wall</text>
+ <text x="60" y="265" font-size="11" fill="#334155">• Planar heading $	heta \in [-\pi, +\pi]$</text>
+ <text x="60" y="305" font-size="11" font-weight="bold" fill="#2563eb">Source: Beacon payload bytes 8–12</text>
+
+ <!-- Arrow 1 -> 2 -->
+ <g transform="translate(320, 200)">
+ <line x1="10" y1="20" x2="80" y2="20" stroke="#0ea5e9" stroke-width="3"/>
+ <text x="45" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#0284c7">Rotation</text>
+ <text x="45" y="35" text-anchor="middle" font-size="9" fill="#64748b">by bearing $\psi$</text>
+ </g>
+
+ <!-- Frame 2: Intermediate ENU Frame -->
+ <rect x="410" y="100" width="270" height="240" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" rx="8"/>
+ <text x="545" y="130" text-anchor="middle" font-size="14" font-weight="bold" fill="#166534">2. ONA Anchor Datum (ENU)</text>
+ <text x="430" y="165" font-size="11" fill="#334155">• Easting $E = x \sin\psi - y \cos\psi$</text>
+ <text x="430" y="195" font-size="11" fill="#334155">• Northing $N = x \cos\psi + y \sin\psi$</text>
+ <text x="430" y="225" font-size="11" fill="#334155">• Tunnel mouth datum: $(lat_0, lon_0, h_0)$</text>
+ <text x="430" y="255" font-size="11" fill="#334155">• Tunnel bore azimuth: $\psi = 30.0^\circ$</text>
+ <text x="430" y="305" font-size="11" font-weight="bold" fill="#16a34a">Surveyed GPS base point</text>
+
+ <!-- Arrow 2 -> 3 -->
+ <g transform="translate(680, 200)">
+ <line x1="10" y1="20" x2="80" y2="20" stroke="#10b981" stroke-width="3"/>
+ <text x="45" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#059669">WGS-84</text>
+ <text x="45" y="35" text-anchor="middle" font-size="9" fill="#64748b">Projection</text>
+ </g>
+
+ <!-- Frame 3: WGS-84 GPS Frame -->
+ <rect x="770" y="100" width="250" height="240" fill="#fef2f2" stroke="#ef4444" stroke-width="2" rx="8"/>
+ <text x="895" y="130" text-anchor="middle" font-size="14" font-weight="bold" fill="#991b1b">3. Real-World WGS-84</text>
+ <text x="790" y="165" font-size="11" fill="#334155">• $lat = lat_0 + (N/R) 	imes (180/\pi)$</text>
+ <text x="790" y="195" font-size="11" fill="#334155">• $lon = lon_0 + rac{E}{R\cos(lat_0)} 	imes rac{180}{\pi}$</text>
+ <text x="790" y="225" font-size="11" fill="#334155">• Altitude $alt = h_0 + z$</text>
+ <text x="790" y="260" font-size="11" fill="#334155">• Example result:</text>
+ <text x="805" y="280" font-size="10" font-weight="bold" fill="#b91c1c">36.806820° N, 10.181747° E</text>
+ <text x="790" y="305" font-size="11" font-weight="bold" fill="#dc2626">Rendered on Command Post Map</text>
+
+ <!-- Uncertainty Ellipse Section -->
+ <rect x="40" y="370" width="980" height="120" fill="#f8fafc" stroke="#cbd5e1" rx="8"/>
+ <text x="60" y="398" font-size="13" font-weight="bold" fill="#334155">Uncertainty Propagation &amp; Error Ellipse Modeling:</text>
+ <text x="60" y="425" font-size="11" fill="#475569">Odometric error grows monotonically with traversed path length: $\sigma(s) = \sigma_0 + lpha s = 0.30	ext{ m} + 0.02 s$.</text>
+ <text x="60" y="448" font-size="11" fill="#475569">When the robot passes an installed beacon, its pose is re-anchored and $\sigma(s)$ resets to the landmark residual.</text>
+ <text x="60" y="471" font-size="11" fill="#475569">The Command Post map displays each event with an uncertainty circle of radius $\sigma(s)$ surrounding the translated GPS marker.</text>
+</svg>
+
+ </div>
+</div>
+
+</body>
+</html>

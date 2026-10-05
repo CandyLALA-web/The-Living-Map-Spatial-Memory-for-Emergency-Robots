@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D5: LoRa Beacon 16-Byte Compact Message Schema</title>
+<style>
+ * { box-sizing: border-box; }
+ body {
+ margin: 0;
+ padding: 30px 20px;
+ background: #f8fafc;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+ color: #0f172a;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ }
+ .card {
+ background: #ffffff;
+ border: 1px solid #e2e8f0;
+ border-radius: 12px;
+ box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+ padding: 24px;
+ max-width: 1200px;
+ width: 100%;
+ margin-bottom: 20px;
+ }
+ .header {
+ border-bottom: 2px solid #e2e8f0;
+ padding-bottom: 12px;
+ margin-bottom: 20px;
+ text-align: center;
+ }
+ h1 {
+ font-size: 20px;
+ font-weight: 700;
+ color: #1e293b;
+ margin: 0 0 6px 0;
+ }
+ .badge {
+ display: inline-block;
+ background: #e0f2fe;
+ color: #0369a1;
+ font-size: 12px;
+ font-weight: 600;
+ padding: 3px 10px;
+ border-radius: 9999px;
+ }
+ .diagram-container {
+ width: 100%;
+ overflow: auto;
+ display: flex;
+ justify-content: center;
+ background: #ffffff;
+ padding: 10px;
+ }
+ .diagram-container svg {
+ max-width: 100%;
+ height: auto !important;
+ display: block;
+ }
+</style>
+</head>
+<body>
+
+<div class="card">
+ <div class="header">
+ <span class="badge">IEEE RAS &times; IEEE AESS TSYP14 &bull; Phase 1</span>
+ <h1>D5: LoRa Beacon 16-Byte Compact Message Schema</h1>
+ </div>
+ <div class="diagram-container">
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 400" width="100%" height="100%" style="background:#fff; font-family:system-ui,-apple-system,sans-serif;">
+ <text x="530" y="40" text-anchor="middle" font-size="20" font-weight="bold" fill="#1e293b">LoRa Beacon Frame — 16-Byte Compact Schema</text>
+ 
+ <!-- Bytes Header -->
+ <g transform="translate(40, 80)">
+ <!-- Byte 0 -->
+ <rect x="0" y="0" width="60" height="70" fill="#fb923c" stroke="#c2410c" stroke-width="2"/>
+ <text x="30" y="30" text-anchor="middle" font-size="11" font-weight="bold" fill="#7c2d12">TYPE</text>
+ <text x="30" y="48" text-anchor="middle" font-size="9" fill="#7c2d12">FLAGS</text>
+ <text x="30" y="-8" text-anchor="middle" font-size="10" fill="#64748b">1 B</text>
+ <text x="30" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">0</text>
+
+ <!-- Bytes 1-4 -->
+ <rect x="60" y="0" width="240" height="70" fill="#93c5fd" stroke="#2563eb" stroke-width="2"/>
+ <text x="180" y="32" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e3a8a">TIMESTAMP</text>
+ <text x="180" y="48" text-anchor="middle" font-size="10" fill="#1e3a8a">uint32 (mission elapsed sec)</text>
+ <text x="180" y="-8" text-anchor="middle" font-size="10" fill="#64748b">4 B</text>
+ <text x="180" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">1 – 4</text>
+
+ <!-- Bytes 5-6 -->
+ <rect x="300" y="0" width="120" height="70" fill="#86efac" stroke="#16a34a" stroke-width="2"/>
+ <text x="360" y="32" text-anchor="middle" font-size="12" font-weight="bold" fill="#14532d">BEACON_ID</text>
+ <text x="360" y="48" text-anchor="middle" font-size="10" fill="#14532d">uint16</text>
+ <text x="360" y="-8" text-anchor="middle" font-size="10" fill="#64748b">2 B</text>
+ <text x="360" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">5 – 6</text>
+
+ <!-- Byte 7 -->
+ <rect x="420" y="0" width="80" height="70" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+ <text x="460" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#78350f">CONFID.</text>
+ <text x="460" y="48" text-anchor="middle" font-size="9" fill="#78350f">uint8 (0-255)</text>
+ <text x="460" y="-8" text-anchor="middle" font-size="10" fill="#64748b">1 B</text>
+ <text x="460" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">7</text>
+
+ <!-- Bytes 8-9 -->
+ <rect x="500" y="0" width="110" height="70" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2"/>
+ <text x="555" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#4c1d95">LOCAL_X</text>
+ <text x="555" y="48" text-anchor="middle" font-size="10" fill="#4c1d95">int16 (cm)</text>
+ <text x="555" y="-8" text-anchor="middle" font-size="10" fill="#64748b">2 B</text>
+ <text x="555" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">8 – 9</text>
+
+ <!-- Bytes 10-11 -->
+ <rect x="610" y="0" width="110" height="70" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2"/>
+ <text x="665" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#4c1d95">LOCAL_Y</text>
+ <text x="665" y="48" text-anchor="middle" font-size="10" fill="#4c1d95">int16 (cm)</text>
+ <text x="665" y="-8" text-anchor="middle" font-size="10" fill="#64748b">2 B</text>
+ <text x="665" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">10 – 11</text>
+
+ <!-- Byte 12 -->
+ <rect x="720" y="0" width="70" height="70" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2"/>
+ <text x="755" y="32" text-anchor="middle" font-size="11" font-weight="bold" fill="#4c1d95">LOCAL_θ</text>
+ <text x="755" y="48" text-anchor="middle" font-size="9" fill="#4c1d95">int8 (1.4°)</text>
+ <text x="755" y="-8" text-anchor="middle" font-size="10" fill="#64748b">1 B</text>
+ <text x="755" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">12</text>
+
+ <!-- Byte 13 -->
+ <rect x="790" y="0" width="70" height="70" fill="#99f6e4" stroke="#0f766e" stroke-width="2"/>
+ <text x="825" y="30" text-anchor="middle" font-size="10" font-weight="bold" fill="#134e4a">FRAME</text>
+ <text x="825" y="48" text-anchor="middle" font-size="9" fill="#134e4a">+ TTL</text>
+ <text x="825" y="-8" text-anchor="middle" font-size="10" fill="#64748b">1 B</text>
+ <text x="825" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">13</text>
+
+ <!-- Bytes 14-15 -->
+ <rect x="860" y="0" width="120" height="70" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+ <text x="920" y="32" text-anchor="middle" font-size="12" font-weight="bold" fill="#7f1d1d">CRC-16</text>
+ <text x="920" y="48" text-anchor="middle" font-size="10" fill="#7f1d1d">CCITT-FALSE</text>
+ <text x="920" y="-8" text-anchor="middle" font-size="10" fill="#64748b">2 B</text>
+ <text x="920" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#334155">14 – 15</text>
+ </g>
+
+ <!-- Legend & Annotations -->
+ <g transform="translate(40, 210)">
+ <rect x="0" y="0" width="980" height="150" fill="#f8fafc" stroke="#cbd5e1" rx="8"/>
+ <text x="20" y="28" font-size="12" font-weight="bold" fill="#334155">Field Specifications &amp; Semantics:</text>
+ <text x="20" y="55" font-size="11" fill="#475569">• <tspan font-weight="bold">TYPE[3:0]</tspan>: 0=Breadcrumb, 1=GAS_LEAK, 2=BLOCKED_PASSAGE, 3-15=Reserved | <tspan font-weight="bold">FLAGS[7:4]</tspan>: Verified, Low Batt, Relayed</text>
+ <text x="20" y="78" font-size="11" fill="#475569">• <tspan font-weight="bold">TIMESTAMP</tspan>: Elapsed mission seconds since $T_0$. Used for confidence decay $c(t) = 2^{-(t-T)/	au}$.</text>
+ <text x="20" y="101" font-size="11" fill="#475569">• <tspan font-weight="bold">LOCAL POSE (X, Y, θ)</tspan>: Metric offset in cm from ONA portal anchor. Range: ±327.67 m, angular resolution 1.4°.</text>
+ <text x="20" y="124" font-size="11" fill="#475569">• <tspan font-weight="bold">FRAME/TTL &amp; CRC-16</tspan>: 4-bit datum ID + 4-bit hop counter (max 15 hops). 16-bit CRC ensures high-noise rejection.</text>
+ </g>
+</svg>
+
+ </div>
+</div>
+
+</body>
+</html>

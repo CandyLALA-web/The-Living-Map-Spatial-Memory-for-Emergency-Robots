@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D1: System Architecture Diagram ( Three-Tier Topology)</title>
+<style>
+ * { box-sizing: border-box; }
+ body {
+ margin: 0;
+ padding: 30px 20px;
+ background: #f8fafc;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+ color: #0f172a;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ }
+ .card {
+ background: #ffffff;
+ border: 1px solid #e2e8f0;
+ border-radius: 12px;
+ box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+ padding: 24px;
+ max-width: 1200px;
+ width: 100%;
+ margin-bottom: 20px;
+ }
+ .header {
+ border-bottom: 2px solid #e2e8f0;
+ padding-bottom: 12px;
+ margin-bottom: 20px;
+ text-align: center;
+ }
+ h1 {
+ font-size: 20px;
+ font-weight: 700;
+ color: #1e293b;
+ margin: 0 0 6px 0;
+ }
+ .badge {
+ display: inline-block;
+ background: #e0f2fe;
+ color: #0369a1;
+ font-size: 12px;
+ font-weight: 600;
+ padding: 3px 10px;
+ border-radius: 9999px;
+ }
+ .diagram-container {
+ width: 100%;
+ overflow: auto;
+ display: flex;
+ justify-content: center;
+ background: #ffffff;
+ padding: 10px;
+ }
+ .diagram-container svg {
+ max-width: 100%;
+ height: auto !important;
+ display: block;
+ }
+</style>
+</head>
+<body>
+
+<div class="card">
+ <div class="header">
+ <span class="badge">IEEE RAS &times; IEEE AESS TSYP14 &bull; Phase 1</span>
+ <h1>D1: System Architecture Diagram ( Three-Tier Topology)</h1>
+ </div>
+ <div class="diagram-container">
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" width="100%" height="100%" style="background:#fff; font-family:system-ui,-apple-system,sans-serif;">
+ <text x="550" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#0f172a">D1 — System Architecture Diagram </text>
+ <text x="550" y="58" text-anchor="middle" font-size="13" fill="#64748b">The Living Map: Spatial Memory for Emergency Robots (TSYP14 Technical Challenge)</text>
+
+ <!-- ZONE 1: GPS-Denied Tunnel -->
+ <rect x="30" y="80" width="460" height="560" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,6" rx="10"/>
+ <rect x="30" y="80" width="460" height="35" fill="#e2e8f0" rx="10"/>
+ <text x="260" y="103" text-anchor="middle" font-size="14" font-weight="bold" fill="#334155">GPS-DENIED DISASTER ZONE (Tunnel / Mine)</text>
+
+ <!-- Writer Robot Box -->
+ <rect x="50" y="130" width="420" height="150" fill="#dbeafe" stroke="#2563eb" stroke-width="2" rx="8"/>
+ <text x="70" y="155" font-size="14" font-weight="bold" fill="#1e40af">Writer Robot (Reconnaissance)</text>
+ <text x="70" y="180" font-size="11" fill="#1e3a8a">• 2D LiDAR (360°, 12m) + IMU Gyro + Encoders</text>
+ <text x="70" y="200" font-size="11" fill="#1e3a8a">• Frontier-Based Exploration &amp; A* Global Path Planning</text>
+ <text x="70" y="220" font-size="11" fill="#1e3a8a">• Virtual Gas Sensor &amp; LiDAR Obstacle Classifier</text>
+ <text x="70" y="240" font-size="11" fill="#1e3a8a">• Rotary Beacon Carousel (8 Units) + Drop Dispenser</text>
+ <text x="70" y="260" font-size="11" font-weight="bold" fill="#dc2626">• RF: Channel 2 (Write) | NO INTERNET / GPS</text>
+
+ <!-- Beacon Mesh Box -->
+ <rect x="50" y="310" width="420" height="150" fill="#fff7ed" stroke="#ea580c" stroke-width="2" rx="8"/>
+ <text x="70" y="335" font-size="14" font-weight="bold" fill="#9a3412">Distributed Beacon Network (Spatial Memory)</text>
+ <text x="70" y="360" font-size="11" fill="#c2410c">• 16-Byte Compact Binary Frame (Event, Pose, Time, CRC)</text>
+ <text x="70" y="380" font-size="11" fill="#c2410c">• 433 MHz LoRa RF Broadcast (6m Nominal Tunnel Range)</text>
+ <text x="70" y="400" font-size="11" fill="#c2410c">• Hop-by-Hop Gossip Relay toward Tunnel Entrance</text>
+ <text x="70" y="420" font-size="11" fill="#c2410c">• Dynamic Confidence Aging Decay ($c = 2^{-(t-T)/	au}$)</text>
+ <text x="70" y="440" font-size="11" font-weight="bold" fill="#c2410c">• RF: Channel 1 (Gossip Relay Mesh)</text>
+
+ <!-- Executor Robot Box -->
+ <rect x="50" y="490" width="420" height="130" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" rx="8"/>
+ <text x="70" y="515" font-size="14" font-weight="bold" fill="#166534">Executor Robot (Intervention)</text>
+ <text x="70" y="540" font-size="11" fill="#14532d">• Inherits Briefing Route at Tunnel Entrance</text>
+ <text x="70" y="560" font-size="11" fill="#14532d">• Beacon-Guided Navigation FSM (Follow Chain &rarr; Verify &rarr; Act)</text>
+ <text x="70" y="580" font-size="11" fill="#14532d">• Re-senses Stale Hazards &amp; Updates Living Memory</text>
+ <text x="70" y="600" font-size="11" font-weight="bold" fill="#166534">• RF: Ch 1 (Listen) &amp; Ch 3 (Briefing) | NO INTERNET / GPS</text>
+
+ <!-- ZONE 2: Outside Network Area (ONA) -->
+ <rect x="530" y="80" width="240" height="560" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" rx="10"/>
+ <rect x="530" y="80" width="240" height="35" fill="#dcfce7" rx="10"/>
+ <text x="650" y="103" text-anchor="middle" font-size="13" font-weight="bold" fill="#166534">OUTSIDE NETWORK AREA (ONA)</text>
+
+ <!-- ONA Components -->
+ <rect x="545" y="130" width="210" height="90" fill="#fff" stroke="#16a34a" rx="6"/>
+ <text x="650" y="155" text-anchor="middle" font-size="12" font-weight="bold" fill="#166534">RF Gateway Node</text>
+ <text x="650" y="175" text-anchor="middle" font-size="10" fill="#334155">Ch 1 (Beacon Listener)</text>
+ <text x="650" y="195" text-anchor="middle" font-size="10" fill="#334155">Ch 3 (Executor Handshake)</text>
+
+ <rect x="545" y="240" width="210" height="150" fill="#fff" stroke="#16a34a" rx="6"/>
+ <text x="650" y="265" text-anchor="middle" font-size="12" font-weight="bold" fill="#166534">ONA Edge Processor</text>
+ <text x="650" y="290" text-anchor="middle" font-size="10" fill="#334155">• CRC Check &amp; Deduplication</text>
+ <text x="650" y="310" text-anchor="middle" font-size="10" fill="#334155">• Confidence Aging Engine</text>
+ <text x="650" y="330" text-anchor="middle" font-size="10" fill="#334155">• Geodetic Transform</text>
+ <text x="650" y="348" text-anchor="middle" font-size="9" fill="#15803d">(Local Frame &rarr; WGS-84)</text>
+ <text x="650" y="370" text-anchor="middle" font-size="10" fill="#334155">• Store-and-Forward Queue</text>
+
+ <rect x="545" y="410" width="210" height="100" fill="#fff" stroke="#16a34a" rx="6"/>
+ <text x="650" y="435" text-anchor="middle" font-size="12" font-weight="bold" fill="#166534">Long-Haul Uplink</text>
+ <text x="650" y="460" text-anchor="middle" font-size="10" fill="#334155">Starlink / Cellular LTE</text>
+ <text x="650" y="480" text-anchor="middle" font-size="10" fill="#334155">TCP/IP JSON Telemetry</text>
+
+ <!-- ZONE 3: Remote Command Post -->
+ <rect x="810" y="80" width="260" height="560" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="10"/>
+ <rect x="810" y="80" width="260" height="35" fill="#fee2e2" rx="10"/>
+ <text x="940" y="103" text-anchor="middle" font-size="13" font-weight="bold" fill="#991b1b">REMOTE COMMAND POST</text>
+
+ <rect x="825" y="130" width="230" height="490" fill="#fff" stroke="#dc2626" rx="6"/>
+ <text x="940" y="160" text-anchor="middle" font-size="13" font-weight="bold" fill="#991b1b">Incident Dashboard</text>
+ <text x="845" y="195" font-size="11" fill="#334155">• Ingestion Server (TCP Socket)</text>
+ <text x="845" y="225" font-size="11" fill="#334155">• Spatiotemporal Event DB (SQLite)</text>
+ <text x="845" y="255" font-size="11" font-weight="bold" fill="#2563eb">• Live Map (WGS-84 GIS Canvas)</text>
+ <text x="860" y="275" font-size="10" fill="#64748b">- Opacity &prop; Confidence $c(t)$</text>
+ <text x="860" y="295" font-size="10" fill="#64748b">- Error Ellipses $\sigma(s)$</text>
+ <text x="860" y="315" font-size="10" fill="#64748b">- Gas / Blockage Event Markers</text>
+ <text x="845" y="350" font-size="11" fill="#334155">• Mission Planner Interface</text>
+ <text x="845" y="380" font-size="11" fill="#334155">• Briefing Packet Generator</text>
+ <text x="860" y="400" font-size="10" fill="#64748b">- Waypoint Chain Selection</text>
+ <text x="860" y="420" font-size="10" fill="#64748b">- Hazard Zones &amp; Clock Sync</text>
+ <text x="845" y="460" font-size="11" font-weight="bold" fill="#15803d">&larr; Pushes Mission Packet to ONA</text>
+
+ <!-- ARROWS & LABELS -->
+ <line x1="260" y1="280" x2="260" y2="310" stroke="#ea580c" stroke-width="3" marker-end="url(#arrow)"/>
+ <text x="270" y="300" font-size="10" font-weight="bold" fill="#ea580c">Ch 2 Write</text>
+
+ <line x1="470" y1="385" x2="545" y2="175" stroke="#ea580c" stroke-width="2.5"/>
+ <text x="495" y="270" font-size="10" font-weight="bold" fill="#ea580c">Ch 1 Gossip</text>
+
+ <line x1="545" y1="210" x2="470" y2="540" stroke="#16a34a" stroke-width="2.5"/>
+ <text x="480" y="480" font-size="10" font-weight="bold" fill="#166534">Ch 3 Briefing</text>
+
+ <line x1="755" y1="460" x2="825" y2="460" stroke="#2563eb" stroke-width="3"/>
+ <text x="765" y="450" font-size="10" font-weight="bold" fill="#2563eb">TCP Uplink</text>
+
+ <!-- STRICT CONSTRAINT CALLOUT -->
+ <rect x="250" y="645" width="600" height="28" fill="#fee2e2" stroke="#ef4444" rx="4"/>
+ <text x="550" y="664" text-anchor="middle" font-size="11" font-weight="bold" fill="#b91c1c">&#9888; ENFORCED CONSTRAINT: NO DIRECT RF/IP LINK ALLOWED BETWEEN ROBOTS &amp; COMMAND POST</text>
+</svg>
+
+ </div>
+</div>
+
+</body>
+</html>
