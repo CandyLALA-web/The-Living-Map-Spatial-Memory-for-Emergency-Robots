@@ -1,0 +1,269 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/adept/pioneer3/protos/Pioneer3dx.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation 0 0 1 3.1415926535897936
+  position 5.565684006938934 -0.24000154274452665 0.4199991184279454
+}
+Background {
+  skyColor [
+    0.02 0.02 0.02
+  ]
+}
+PointLight {
+  attenuation 0 0 1
+  color 1 0.8 0.5
+  intensity 14
+  location -3 1.5 0
+  radius 20
+}
+PointLight {
+  attenuation 0 0 1
+  color 1 0.8 0.5
+  intensity 14
+  location 3 1.5 0
+  radius 10
+}
+Solid {
+  rotation 1 0 0 1.5708
+  children [
+    Solid {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.35 0.3 0.25
+            roughness 1
+          }
+          geometry Box {
+            size 10 0.1 1.5
+          }
+        }
+      ]
+      name "tunnel_floor"
+      boundingObject Box {
+        size 10 0.1 1.5
+      }
+    }
+    Solid {
+      translation 0 1 -0.75
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.3 0.28 0.25
+            roughness 1
+          }
+          geometry Box {
+            size 10 2 0.1
+          }
+        }
+      ]
+      name "tunnel_wall_left"
+      boundingObject Box {
+        size 10 2 0.1
+      }
+    }
+    Solid {
+      translation 0 1 0.75
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.3 0.28 0.25
+            roughness 1
+          }
+          geometry Box {
+            size 10 2 0.1
+          }
+        }
+      ]
+      name "tunnel_wall_right"
+      boundingObject Box {
+        size 10 2 0.1
+      }
+    }
+    Solid {
+      translation 0 2 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.22 0.2
+            roughness 1
+          }
+          geometry Box {
+            size 10 0.1 1.5
+          }
+        }
+      ]
+      name "tunnel_ceiling"
+      boundingObject Box {
+        size 10 0.1 1.5
+      }
+    }
+    Solid {
+      translation -5 1 0
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.3 0.28 0.25
+            roughness 1
+          }
+          geometry Box {
+            size 0.1 2 1.5
+          }
+        }
+      ]
+      name "tunnel_endcap_far"
+      boundingObject Box {
+        size 0.1 2 1.5
+      }
+    }
+    Solid {
+      translation 0.58 0.68 -0.65
+      rotation 0.5773489358556708 0.5773509358554485 0.5773509358554485 2.0944
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.5 0.35 0.1
+            roughness 0.6
+            metalness 0.4
+          }
+          geometry Cylinder {
+            height 8
+            radius 0.05
+            subdivision 12
+          }
+        }
+      ]
+      name "gas_pipe_main"
+    }
+    Solid {
+      translation 0.68 0.860018 -0.64
+      rotation 0.5773489358556708 0.5773509358554485 -0.5773509358554485 -2.094395307179586
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.45 0.3 0.1
+            roughness 0.6
+            metalness 0.4
+          }
+          geometry Cylinder {
+            height 8
+            radius 0.03
+            subdivision 12
+          }
+        }
+      ]
+      name "gas_pipe_secondary"
+    }
+    Solid {
+      translation 0.18 0.68 -0.64
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.8 0.2 0.1
+            roughness 0.4
+            metalness 0.2
+          }
+          geometry Sphere {
+            radius 0.08
+          }
+        }
+      ]
+      name "gas_leak_point"
+    }
+    DEF VALVE Solid {
+      translation 2 0.6 -0.5
+      children [
+        Shape {
+          appearance DEF VALVE_APPEARANCE PBRAppearance {
+            baseColor 0.8 0.1 0.1
+            roughness 0.4
+            metalness 0.6
+          }
+          geometry Cylinder {
+            height 0.2
+            radius 0.08
+            subdivision 12
+          }
+        }
+      ]
+      name "valve"
+    }
+    Solid {
+      translation 3.69714 0.900933 -0.0367992
+      rotation 0.8960855552316294 0.4139397945426897 0.16026392045366386 0.830297
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.35 0.22 0.1
+            roughness 0.9
+          }
+          geometry Box {
+            size 0.15 2 0.15
+          }
+        }
+      ]
+      name "collapsing_beam"
+    }
+    Solid {
+      translation 0.67 0.26 0.24
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.3 0.28 0.25
+            roughness 1
+          }
+          geometry Sphere {
+            radius 0.25
+          }
+        }
+      ]
+      name "loose_rock_debris"
+    }
+  ]
+  name "tunnel_segment_1"
+}
+Fog {
+  color 0.1 0.1 0.1
+  visibilityRange 8
+}
+DEF WRITER Pioneer3dx {
+  hidden position_0_0 -2.843501510700053e-06
+  hidden position_0_1 740.0782023993488
+  hidden position_0_2 774.1223804570362
+  hidden linearVelocity_0 0.24364838386060025 0.007037538983096287 2.5884213401499375e-08
+  hidden angularVelocity_0 2.346893603012935e-06 6.042720138729931e-08 3.1022422369211555e-05
+  hidden rotation_1 0.5773491746480354 -0.5773508164595951 -0.5773508164596907 2.094396641813115
+  hidden position_1_0 -935.894472049211
+  hidden linearVelocity_1 0.24364857973696444 0.0070307776007442965 2.492489732159697e-08
+  hidden angularVelocity_1 2.0961315171154747e-06 5.3185838233902026e-08 3.075624073417374e-05
+  hidden rotation_2 -1 0 0 5.983046586632205
+  hidden linearVelocity_2 0.2436486702849327 0.007027643764257358 2.4866819696470312e-08
+  hidden angularVelocity_2 -0.18763156722810645 6.497291297680539 4.263339674884513e-05
+  hidden rotation_4 0.7046952420168546 -0.7046952787979601 -0.08251775517227752 2.9769301133261394
+  hidden linearVelocity_4 0.24364493233114837 0.007040951219152353 4.0610169543359926e-07
+  hidden angularVelocity_4 -0.07216953756151506 2.4988695497075657 3.4165606184060876e-05
+  hidden rotation_9 -0.13830438635248676 0.13830433655366953 0.9806853762579064 4.692886695973246
+  hidden linearVelocity_9 0.24365163365155632 0.007041144891007134 -3.534288351722384e-07
+  hidden angularVelocity_9 -0.07217464731620053 2.4990464769166816 3.4166008765236324e-05
+  translation 4.201888647657549 -0.22564758182815509 0.14481394994336208
+  rotation -0.011115652209442018 0.7679521978229479 -0.6404106995786863 -0.04508267131957577
+  name "Writer"
+  controller "Writer_controller"
+  extensionSlot [
+    GPS {
+    }
+  ]
+}
+Pioneer3dx {
+  translation 5.03 0.3 0.3
+  name "Executor"
+  extensionSlot [
+    Compass {
+    }
+    GPS {
+    }
+  ]
+}
